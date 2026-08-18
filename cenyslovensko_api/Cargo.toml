@@ -3,6 +3,8 @@ name = "cenyslovensko"
 version = "0.1.0"
 edition = "2024"
 description = "Umbrella crate for the CenySlovensko API — feature-gate individual sub-crates."
+license.workspace = true
+repository.workspace = true
 publish = true
 
 [features]

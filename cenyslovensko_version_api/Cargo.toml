@@ -2,6 +2,9 @@
 name = "cenyslovensko_version_api"
 version = "0.1.0"
 edition = "2024"
+description = "Version API client for CenySlovensko — fetch the current API version over HTTP."
+license.workspace = true
+repository.workspace = true
 
 [features]
 default = ["get_version"]

@@ -2,6 +2,10 @@
 resolver = "3"
 members = ["cenyslovensko_api", "cenyslovensko_rpc_server", "cenyslovensko_version_api", "cenyslovensko_web_client"]
 
+[workspace.package]
+license = "MIT"
+repository = "https://github.com/karafra/cenyslovensko-api"
+
 [workspace.dependencies]
 reqwest = "0.13.4"
 tokio = "1.53.1"
