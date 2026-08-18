@@ -49,10 +49,10 @@ jobs:
           )
 
           jq -n \
-            --arg client     "rust" \
+            --arg client "rust" \
             --arg repository "cenyslovensko-api/core" \
-            --arg commit     "$(git rev-parse --short HEAD)" \
-            --arg timestamp  "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            --arg commit "$(git rev-parse --short HEAD)" \
+            --arg timestamp "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
             --argjson benchmarks "$BENCHMARKS_JSON" \
             '{client: $client, repository: $repository, commit: $commit, timestamp: $timestamp, benchmarks: $benchmarks}' \
             > benchmark-report.json
