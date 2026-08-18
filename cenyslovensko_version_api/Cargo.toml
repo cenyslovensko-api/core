@@ -1,0 +1,19 @@
+[package]
+name = "cenyslovensko_version_api"
+edition = "2024"
+
+[features]
+default = ["get_version"]
+get_version = []
+
+[dependencies]
+tokio = { workspace = true }
+reqwest = { workspace = true, features = ["json"] }
+serde = { workspace = true, features = ["derive"] }
+derive_more = { workspace = true, features = ["display", "eq", "constructor"] }
+miette = { workspace = true }
+anyhow = { workspace = true }
+cenyslovensko_web_client = { workspace = true }
+
+[dev-dependencies]
+httpmock = { workspace = true }
