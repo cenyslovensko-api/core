@@ -1,6 +1,6 @@
 [package]
 name = "cenyslovensko_version_api"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2024"
 description = "Version API client for CenySlovensko - fetch the current API version over HTTP."
 license.workspace = true
