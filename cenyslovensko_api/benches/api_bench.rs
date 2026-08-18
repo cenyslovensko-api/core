@@ -22,5 +22,9 @@ fn bench_web_client_resolve_url(c: &mut Criterion) {
     });
 }
 
-criterion_group!(benches, bench_web_client_build, bench_web_client_resolve_url,);
+criterion_group!(
+    benches,
+    bench_web_client_build,
+    bench_web_client_resolve_url,
+);
 criterion_main!(benches);

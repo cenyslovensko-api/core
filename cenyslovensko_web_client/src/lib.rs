@@ -31,7 +31,9 @@ pub enum WebClientError {
     #[display("Invalid header name: {_0}")]
     #[diagnostic(
         code(cenyslovensko::web_client::invalid_header_name),
-        help("Header names must be valid ASCII and cannot contain whitespace or control characters")
+        help(
+            "Header names must be valid ASCII and cannot contain whitespace or control characters"
+        )
     )]
     InvalidHeaderName(#[error(not(source))] String),
 
