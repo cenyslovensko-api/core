@@ -68,3 +68,5 @@ jobs:
     uses: cenyslovensko-api/benchmarks/.github/workflows/bulk-benchmark.yml@main
     with:
       report_json: ${{ needs.benchmark.outputs.report }}
+    secrets:
+      github_app_private_key: ${{ secrets.BENCHMARKS_GITHUB_APP_PRIVATE_KEY }}
