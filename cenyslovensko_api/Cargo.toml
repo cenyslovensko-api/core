@@ -1,6 +1,6 @@
 [package]
-name = "cenyslovensko"
-version = "0.1.0"
+name = "cenyslovensko_api"
+version = "0.1.1"
 edition = "2024"
 description = "Umbrella crate for the CenySlovensko API — feature-gate individual sub-crates."
 license.workspace = true
@@ -13,5 +13,5 @@ web_client = ["dep:cenyslovensko_web_client"]
 version = ["web_client", "dep:cenyslovensko_version_api"]
 
 [dependencies]
-cenyslovensko_web_client = { path = "../cenyslovensko_web_client", version = "0.1.0", optional = true }
-cenyslovensko_version_api = { path = "../cenyslovensko_version_api", version = "0.1.0", optional = true, features = ["get_version"] }
+cenyslovensko_web_client = { path = "../cenyslovensko_web_client", version = "0.1.1", optional = true }
+cenyslovensko_version_api = { path = "../cenyslovensko_version_api", version = "0.1.1", optional = true, features = ["get_version"] }
