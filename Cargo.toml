@@ -1,6 +1,12 @@
 [workspace]
 resolver = "3"
-members = ["cenyslovensko_api", "cenyslovensko_rpc_server", "cenyslovensko_version_api", "cenyslovensko_web_client"]
+members = [
+    "cenyslovensko_rpc_server",
+    "cenyslovensko_api",
+    "cenyslovensko_vendor_api",
+    "cenyslovensko_version_api",
+    "cenyslovensko_web_client"
+]
 
 [workspace.package]
 license = "MIT"
@@ -15,4 +21,4 @@ derive_more = "2.1.1"
 anyhow = "1.0.104"
 miette = "7.6.0"
 httpmock = "0.8.3"
-criterion = { version = "0.5", features = ["async_tokio"] }
+criterion = { version = "0.8.2", features = ["async_tokio"] }

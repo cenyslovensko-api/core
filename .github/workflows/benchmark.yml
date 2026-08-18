@@ -33,10 +33,7 @@ jobs:
       - name: Run benchmarks
         # language=bash
         run: |
-          cargo bench -p cenyslovensko_rpc_server
-          cargo bench -p cenyslovensko_version_api
-          cargo bench -p cenyslovensko_api --features web_client
-
+          cargo bench
 
       - name: Transform benchmarks to JSON
         id: run

@@ -8,7 +8,7 @@ pub enum VersionError {
     #[diagnostic(
         code(cenyslovensko::version::not_found),
         help(
-            "The version endpoint returned 404 — check that the API base URI and version path are correct"
+            "The version endpoint returned 404 - check that the API base URI and version path are correct"
         )
     )]
     NotFound,

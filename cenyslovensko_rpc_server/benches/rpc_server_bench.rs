@@ -1,6 +1,10 @@
+use cenyslovensko_api::vendor::domain::vendor::Vendor;
+use cenyslovensko_api::vendor::domain::vendor_error::VendorError;
 use cenyslovensko_rpc_server::application::RpcApplication;
-use cenyslovensko_rpc_server::domain::{RpcRequest, RpcResponse, VERSION_GET_METHOD};
-use cenyslovensko_rpc_server::ports::{RpcRequestHandler, VersionGateway};
+use cenyslovensko_rpc_server::domain::{
+    RpcRequest, RpcResponse, VENDOR_GET_METHOD, VERSION_GET_METHOD,
+};
+use cenyslovensko_rpc_server::ports::{RpcRequestHandler, VendorGateway, VersionGateway};
 use criterion::{Criterion, criterion_group, criterion_main};
 use serde_json::{Value, json};
 use std::hint::black_box;
@@ -13,9 +17,17 @@ impl VersionGateway for FakeVersionGateway {
     }
 }
 
+struct FakeVendorGateway;
+
+impl VendorGateway for FakeVendorGateway {
+    async fn get_vendor(&self) -> Result<Vec<Vendor>, VendorError> {
+        Ok(vec![])
+    }
+}
+
 fn bench_handle_version_get(c: &mut Criterion) {
     let rt = tokio::runtime::Runtime::new().unwrap();
-    let app = RpcApplication::new(FakeVersionGateway);
+    let app = RpcApplication::new(FakeVersionGateway, FakeVendorGateway);
     let request = RpcRequest {
         id: Value::from(1),
         method: VERSION_GET_METHOD.into(),
@@ -30,7 +42,7 @@ fn bench_handle_version_get(c: &mut Criterion) {
 
 fn bench_handle_unknown_method(c: &mut Criterion) {
     let rt = tokio::runtime::Runtime::new().unwrap();
-    let app = RpcApplication::new(FakeVersionGateway);
+    let app = RpcApplication::new(FakeVersionGateway, FakeVendorGateway);
     let request = RpcRequest {
         id: Value::from(1),
         method: "unknown.method".into(),
@@ -38,6 +50,21 @@ fn bench_handle_unknown_method(c: &mut Criterion) {
     };
 
     c.bench_function("handle_unknown_method", |b| {
+        b.to_async(&rt)
+            .iter(|| app.handle_request(black_box(request.clone())))
+    });
+}
+
+fn bench_handle_vendor_get(c: &mut Criterion) {
+    let rt = tokio::runtime::Runtime::new().unwrap();
+    let app = RpcApplication::new(FakeVersionGateway, FakeVendorGateway);
+    let request = RpcRequest {
+        id: Value::from(1),
+        method: VENDOR_GET_METHOD.into(),
+        params: None,
+    };
+
+    c.bench_function("handle_vendor_get", |b| {
         b.to_async(&rt)
             .iter(|| app.handle_request(black_box(request.clone())))
     });
@@ -62,6 +89,7 @@ fn bench_rpc_response_serialize(c: &mut Criterion) {
 criterion_group!(
     benches,
     bench_handle_version_get,
+    bench_handle_vendor_get,
     bench_handle_unknown_method,
     bench_rpc_request_deserialize,
     bench_rpc_response_serialize,

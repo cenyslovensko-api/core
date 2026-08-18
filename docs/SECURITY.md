@@ -25,9 +25,9 @@ We aim to acknowledge reports within **48 hours** and to release a fix within **
 ## Scope
 
 This policy covers:
-- `cenyslovensko` — umbrella crate
-- `cenyslovensko_web_client` — HTTP client
-- `cenyslovensko_version_api` — version API client
-- `cenyslovensko_rpc_server` — JSON-RPC server binary
+- `cenyslovensko` - umbrella crate
+- `cenyslovensko_web_client` - HTTP client
+- `cenyslovensko_version_api` - version API client
+- `cenyslovensko_rpc_server` - JSON-RPC server binary
 
 Third-party dependencies (e.g. `reqwest`, `tokio`) should be reported upstream to their respective maintainers.

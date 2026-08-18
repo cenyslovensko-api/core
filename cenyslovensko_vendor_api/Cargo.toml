@@ -1,8 +1,7 @@
 [package]
-name = "cenyslovensko_version_api"
+name = "cenyslovensko_vendor_api"
 version = "0.1.3"
 edition = "2024"
-description = "Version API client for CenySlovensko - fetch the current API version over HTTP."
 license.workspace = true
 repository.workspace = true
 
@@ -10,7 +9,7 @@ repository.workspace = true
 tokio = { workspace = true }
 reqwest = { workspace = true, features = ["json"] }
 serde = { workspace = true, features = ["derive"] }
-derive_more = { workspace = true, features = ["display", "eq", "constructor", "error"] }
+derive_more = { workspace = true, features = ["display", "eq", "constructor", "error", "from"] }
 miette = { workspace = true }
 cenyslovensko_web_client = { path = "../cenyslovensko_web_client" }
 
@@ -20,5 +19,5 @@ criterion = { workspace = true }
 tokio = { workspace = true, features = ["rt"] }
 
 [[bench]]
-name = "version_api_bench"
+name = "vendor_api_bench"
 harness = false

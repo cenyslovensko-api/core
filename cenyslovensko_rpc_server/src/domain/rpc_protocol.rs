@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 pub const VERSION_GET_METHOD: &str = "version.get";
+pub const VENDOR_GET_METHOD: &str = "vendor.get";
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 pub struct RpcRequest {

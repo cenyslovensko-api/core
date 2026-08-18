@@ -5,12 +5,14 @@ use std::time::Duration;
 
 const DEFAULT_BASE_URI: &str = "https://api.cenyslovensko.sk/";
 const DEFAULT_VERSION_PATH: &str = "api/version";
+const DEFAULT_VENDOR_PATH: &str = "api/vendor-branch";
 const DEFAULT_TIMEOUT_MS: u64 = 30_000;
 const DEFAULT_CONNECT_TIMEOUT_MS: u64 = 10_000;
 
 pub struct RpcServerConfig {
     pub web_client: WebClient,
     pub version_path: String,
+    pub vendor_path: String,
 }
 
 impl RpcServerConfig {
@@ -18,10 +20,12 @@ impl RpcServerConfig {
         let web_client = build_web_client_from_env()?;
         let version_path =
             env::var("CENYSLOVENSKO_VERSION_PATH").unwrap_or_else(|_| DEFAULT_VERSION_PATH.into());
-
+        let vendor_path =
+            env::var("CENYSLOVENSKO_VENDOR_PATH").unwrap_or_else(|_| DEFAULT_VENDOR_PATH.into());
         Ok(Self {
             web_client,
             version_path,
+            vendor_path,
         })
     }
 }
