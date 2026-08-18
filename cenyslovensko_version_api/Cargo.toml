@@ -1,5 +1,6 @@
 [package]
 name = "cenyslovensko_version_api"
+version = "0.1.0"
 edition = "2024"
 
 [features]
@@ -13,7 +14,7 @@ serde = { workspace = true, features = ["derive"] }
 derive_more = { workspace = true, features = ["display", "eq", "constructor"] }
 miette = { workspace = true }
 anyhow = { workspace = true }
-cenyslovensko_web_client = { path = "../cenyslovensko_web_client" }
+cenyslovensko_web_client = { path = "../cenyslovensko_web_client", version = "0.1.0" }
 
 [dev-dependencies]
 httpmock = { workspace = true }

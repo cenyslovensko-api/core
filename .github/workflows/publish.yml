@@ -9,8 +9,35 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
+  check-version:
+    name: Verify tag matches crate versions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assert tag == Cargo.toml versions
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          echo "Git tag version: $TAG"
+
+          check() {
+            local crate="$1" file="$2"
+            local ver
+            ver=$(grep -m1 '^version' "$file" | sed 's/version = "\(.*\)"/\1/')
+            if [ "$ver" != "$TAG" ]; then
+              echo "ERROR: $crate version $ver does not match tag v$TAG"
+              exit 1
+            fi
+            echo "OK: $crate = $ver"
+          }
+
+          check cenyslovensko            cenyslovensko_api/Cargo.toml
+          check cenyslovensko_web_client cenyslovensko_web_client/Cargo.toml
+          check cenyslovensko_version_api cenyslovensko_version_api/Cargo.toml
+          check cenyslovensko_rpc_server  cenyslovensko_rpc_server/Cargo.toml
+
   publish:
     name: Publish cenyslovensko
+    needs: check-version
     runs-on: ubuntu-latest
     environment: crates-io
     permissions:

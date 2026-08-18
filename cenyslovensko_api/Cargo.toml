@@ -11,5 +11,5 @@ web_client = ["dep:cenyslovensko_web_client"]
 version = ["web_client", "dep:cenyslovensko_version_api"]
 
 [dependencies]
-cenyslovensko_web_client = { path = "../cenyslovensko_web_client", optional = true }
-cenyslovensko_version_api = { path = "../cenyslovensko_version_api", optional = true, features = ["get_version"] }
+cenyslovensko_web_client = { path = "../cenyslovensko_web_client", version = "0.1.0", optional = true }
+cenyslovensko_version_api = { path = "../cenyslovensko_version_api", version = "0.1.0", optional = true, features = ["get_version"] }
