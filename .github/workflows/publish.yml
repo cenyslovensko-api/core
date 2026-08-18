@@ -85,9 +85,35 @@ jobs:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
         run: cargo publish -p cenyslovensko_version_api
 
+  publish-vendor-api:
+    name: Publish cenyslovensko_vendor_api
+    needs: publish-web-client
+    runs-on: ubuntu-latest
+    environment: crates-io
+    permissions:
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+          key: ubuntu-cargo-publish-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ubuntu-cargo-publish-
+      - name: Wait for index propagation
+        run: sleep 30
+      - name: Publish
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: cargo publish -p cenyslovensko_vendor_api
+
   publish:
     name: Publish cenyslovensko
-    needs: publish-version-api
+    needs: [publish-vendor-api, publish-version-api]
     runs-on: ubuntu-latest
     environment: crates-io
     permissions:
