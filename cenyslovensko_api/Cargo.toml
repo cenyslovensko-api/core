@@ -1,7 +1,9 @@
 [package]
 name = "cenyslovensko"
+version = "0.1.0"
 edition = "2024"
 description = "Umbrella crate for the CenySlovensko API — feature-gate individual sub-crates."
+publish = true
 
 [features]
 default = []

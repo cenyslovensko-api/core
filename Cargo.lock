@@ -138,7 +138,7 @@ dependencies = [
 
 [[package]]
 name = "cenyslovensko"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "cenyslovensko_version_api",
  "cenyslovensko_web_client",
