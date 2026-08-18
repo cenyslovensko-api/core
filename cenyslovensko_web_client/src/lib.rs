@@ -1,6 +1,6 @@
+use derive_more::{Display, Error};
+use miette::Diagnostic;
 use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
-use std::error::Error;
-use std::fmt::{Display, Formatter};
 use std::time::Duration;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -18,30 +18,51 @@ impl Default for LogLevel {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Display, Error, Diagnostic, Debug, Clone, PartialEq, Eq)]
+#[diagnostic(url("https://docs.rs/cenyslovensko_web_client"))]
 pub enum WebClientError {
-    InvalidBaseUri(String),
-    InvalidHeaderName(String),
-    InvalidHeaderValue(String),
-    InvalidProxy(String),
-    ClientBuild(String),
-    InvalidPath(String),
-}
+    #[display("Invalid base URI: {_0}")]
+    #[diagnostic(
+        code(cenyslovensko::web_client::invalid_base_uri),
+        help("Ensure the base URI is a valid URL, e.g. `https://api.cenyslovensko.sk/`")
+    )]
+    InvalidBaseUri(#[error(not(source))] String),
 
-impl Display for WebClientError {
-    fn fmt(&self, formatter: &mut Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Self::InvalidBaseUri(value) => write!(formatter, "Invalid base URI: {value}"),
-            Self::InvalidHeaderName(value) => write!(formatter, "Invalid header name: {value}"),
-            Self::InvalidHeaderValue(value) => write!(formatter, "Invalid header value: {value}"),
-            Self::InvalidProxy(value) => write!(formatter, "Invalid proxy: {value}"),
-            Self::ClientBuild(value) => write!(formatter, "Unable to build web client: {value}"),
-            Self::InvalidPath(value) => write!(formatter, "Invalid path for base URI: {value}"),
-        }
-    }
-}
+    #[display("Invalid header name: {_0}")]
+    #[diagnostic(
+        code(cenyslovensko::web_client::invalid_header_name),
+        help("Header names must be valid ASCII and cannot contain whitespace or control characters")
+    )]
+    InvalidHeaderName(#[error(not(source))] String),
 
-impl Error for WebClientError {}
+    #[display("Invalid header value: {_0}")]
+    #[diagnostic(
+        code(cenyslovensko::web_client::invalid_header_value),
+        help("Header values must be valid ASCII and cannot contain newlines")
+    )]
+    InvalidHeaderValue(#[error(not(source))] String),
+
+    #[display("Invalid proxy: {_0}")]
+    #[diagnostic(
+        code(cenyslovensko::web_client::invalid_proxy),
+        help("Proxy must be a valid URL, e.g. `http://proxy.example.com:8080`")
+    )]
+    InvalidProxy(#[error(not(source))] String),
+
+    #[display("Unable to build web client: {_0}")]
+    #[diagnostic(
+        code(cenyslovensko::web_client::client_build),
+        help("Check your TLS configuration and network settings")
+    )]
+    ClientBuild(#[error(not(source))] String),
+
+    #[display("Invalid path for base URI: {_0}")]
+    #[diagnostic(
+        code(cenyslovensko::web_client::invalid_path),
+        help("The path segment must be a valid relative URL, e.g. `api/version`")
+    )]
+    InvalidPath(#[error(not(source))] String),
+}
 
 #[derive(Debug, Clone)]
 pub struct WebClientConfig {

@@ -57,7 +57,7 @@ jobs:
       - name: Publish
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
-        run: cargo publish -p cenyslovensko_web_client --no-verify
+        run: cargo publish -p cenyslovensko_web_client
 
   publish-version-api:
     name: Publish cenyslovensko_version_api
@@ -83,7 +83,7 @@ jobs:
       - name: Publish
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
-        run: cargo publish -p cenyslovensko_version_api --no-verify
+        run: cargo publish -p cenyslovensko_version_api
 
   publish:
     name: Publish cenyslovensko
@@ -109,5 +109,5 @@ jobs:
       - name: Publish
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
-        run: cargo publish -p cenyslovensko --no-verify
+        run: cargo publish -p cenyslovensko_api
 

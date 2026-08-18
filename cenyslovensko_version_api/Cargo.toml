@@ -14,9 +14,8 @@ get_version = []
 tokio = { workspace = true }
 reqwest = { workspace = true, features = ["json"] }
 serde = { workspace = true, features = ["derive"] }
-derive_more = { workspace = true, features = ["display", "eq", "constructor"] }
+derive_more = { workspace = true, features = ["display", "eq", "constructor", "error"] }
 miette = { workspace = true }
-anyhow = { workspace = true }
 cenyslovensko_web_client = { path = "../cenyslovensko_web_client", version = "0.1.2" }
 
 [dev-dependencies]

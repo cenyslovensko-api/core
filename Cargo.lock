@@ -138,7 +138,7 @@ dependencies = [
 
 [[package]]
 name = "cenyslovensko_api"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "cenyslovensko_version_api",
  "cenyslovensko_web_client",
@@ -146,7 +146,7 @@ dependencies = [
 
 [[package]]
 name = "cenyslovensko_rpc_server"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "anyhow",
  "cenyslovensko_api",
@@ -157,9 +157,8 @@ dependencies = [
 
 [[package]]
 name = "cenyslovensko_version_api"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
- "anyhow",
  "cenyslovensko_web_client",
  "derive_more",
  "httpmock",
@@ -171,8 +170,10 @@ dependencies = [
 
 [[package]]
 name = "cenyslovensko_web_client"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
+ "derive_more",
+ "miette",
  "reqwest",
 ]
 

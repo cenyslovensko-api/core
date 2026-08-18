@@ -8,3 +8,5 @@ repository.workspace = true
 
 [dependencies]
 reqwest = { workspace = true }
+derive_more = { workspace = true, features = ["display", "error"] }
+miette = { workspace = true }
