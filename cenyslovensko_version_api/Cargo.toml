@@ -20,3 +20,9 @@ cenyslovensko_web_client = { path = "../cenyslovensko_web_client", version = "0.
 
 [dev-dependencies]
 httpmock = { workspace = true }
+criterion = { workspace = true }
+tokio = { workspace = true, features = ["rt"] }
+
+[[bench]]
+name = "version_api_bench"
+harness = false

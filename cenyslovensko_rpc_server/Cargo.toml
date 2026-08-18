@@ -9,3 +9,10 @@ serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true }
 anyhow = { workspace = true }
 cenyslovensko_api = { path = "../cenyslovensko_api", features = ["version"] }
+
+[dev-dependencies]
+criterion = { workspace = true}
+
+[[bench]]
+name = "rpc_server_bench"
+harness = false

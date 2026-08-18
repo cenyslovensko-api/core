@@ -1,0 +1,66 @@
+name: Benchmarks
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    outputs:
+      report: ${{ steps.run.outputs.report }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Cargo registry and build
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+            target
+          key: ${{ runner.os }}-cargo-bench-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-bench-
+
+      - name: Run full benchmark suite
+        id: run
+        # language=bash
+        run: |
+          cargo bench -p cenyslovensko_rpc_server
+          cargo bench -p cenyslovensko_version_api
+          cargo bench -p cenyslovensko_api --features web_client
+
+          BENCHMARKS_JSON=$(
+            find target/criterion -path "*/new/estimates.json" | sort | \
+            while IFS= read -r f; do
+              name=$(echo "$f" | sed 's|target/criterion/||;s|/new/estimates.json||')
+              jq --arg name "$name" \
+                '{name: $name, value: (.mean.point_estimate / 1000000), unit: "ms"}' \
+                "$f"
+            done | jq -s '.'
+          )
+
+          jq -n \
+            --arg client     "rust" \
+            --arg repository "cenyslovensko-api/core" \
+            --arg commit     "$(git rev-parse --short HEAD)" \
+            --arg timestamp  "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            --argjson benchmarks "$BENCHMARKS_JSON" \
+            '{client: $client, repository: $repository, commit: $commit, timestamp: $timestamp, benchmarks: $benchmarks}' \
+            > benchmark-report.json
+
+          echo "report=$(cat benchmark-report.json)" >> "$GITHUB_OUTPUT"
+
+  upload:
+    needs: benchmark
+    uses: cenyslovensko-api/benchmarks/.github/workflows/bulk-benchmark.yml@main
+    with:
+      report_json: ${{ needs.benchmark.outputs.report }}
