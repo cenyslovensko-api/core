@@ -1,6 +1,6 @@
-use cenyslovensko_version_api::adapters::http::HttpVersionSource;
-use cenyslovensko_version_api::application::GetVersionUseCase;
-use cenyslovensko_web_client::WebClient;
+use cenyslovensko::version::adapters::http::HttpVersionSource;
+use cenyslovensko::version::application::GetVersionUseCase;
+use cenyslovensko::web_client::WebClient;
 
 use crate::ports::VersionGateway;
 

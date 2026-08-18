@@ -1,5 +1,5 @@
 use anyhow::{Context, Result, anyhow};
-use cenyslovensko_web_client::{LogLevel, WebClient, WebClientConfig};
+use cenyslovensko::web_client::{LogLevel, WebClient, WebClientConfig};
 use std::env;
 use std::time::Duration;
 

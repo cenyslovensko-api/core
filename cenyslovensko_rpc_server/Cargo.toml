@@ -8,5 +8,4 @@ tokio = { workspace = true, features = ["macros", "rt-multi-thread", "io-std", "
 serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true }
 anyhow = { workspace = true }
-cenyslovensko_web_client = { workspace = true }
-cenyslovensko_version_api = { workspace = true }
+cenyslovensko = { path = "../cenyslovensko_api", features = ["version"] }

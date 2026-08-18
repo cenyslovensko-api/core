@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["cenyslovensko_rpc_server","cenyslovensko_version_api", "cenyslovensko_web_client"]
+members = ["cenyslovensko_api", "cenyslovensko_rpc_server", "cenyslovensko_version_api", "cenyslovensko_web_client"]
 
 [workspace.dependencies]
 reqwest = "0.13.4"
@@ -10,6 +10,4 @@ serde_json = "1.0.151"
 derive_more = "2.1.1"
 anyhow = "1.0.104"
 miette = "7.6.0"
-httpmock = "0.7"
-cenyslovensko_web_client = { path = "cenyslovensko_web_client" }
-cenyslovensko_version_api = { path = "cenyslovensko_version_api" }
+httpmock = "0.8.3"
