@@ -1,6 +1,5 @@
 use cenyslovensko_web_client::WebClient;
 use serde::Deserialize;
-use std::future::Future;
 
 use crate::domain::{Version, VersionError};
 use crate::ports::VersionSource;
@@ -25,36 +24,34 @@ struct VersionResponse {
 }
 
 impl VersionSource for HttpVersionSource {
-    fn get_version(&self) -> impl Future<Output = Result<Version, VersionError>> + Send {
-        async move {
-            let endpoint = self
-                .web_client
-                .resolve_url(&self.version_path)
-                .map_err(|error| VersionError::Unavailable(error.to_string()))?;
+    async fn get_version(&self) -> Result<Version, VersionError> {
+        let endpoint = self
+            .web_client
+            .resolve_url(&self.version_path)
+            .map_err(|error| VersionError::Unavailable(error.to_string()))?;
 
-            let response = self
-                .web_client
-                .client()
-                .get(endpoint)
-                .send()
-                .await
-                .map_err(|error| VersionError::Unavailable(error.to_string()))?;
+        let response = self
+            .web_client
+            .client()
+            .get(endpoint)
+            .send()
+            .await
+            .map_err(|error| VersionError::Unavailable(error.to_string()))?;
 
-            if response.status() == reqwest::StatusCode::NOT_FOUND {
-                return Err(VersionError::NotFound);
-            }
-
-            let response = response
-                .error_for_status()
-                .map_err(|error| VersionError::Unavailable(error.to_string()))?;
-
-            let response: VersionResponse = response
-                .json()
-                .await
-                .map_err(|error| VersionError::InvalidResponse(error.to_string()))?;
-
-            Ok(Version::new(response.version))
+        if response.status() == reqwest::StatusCode::NOT_FOUND {
+            return Err(VersionError::NotFound);
         }
+
+        let response = response
+            .error_for_status()
+            .map_err(|error| VersionError::Unavailable(error.to_string()))?;
+
+        let response: VersionResponse = response
+            .json()
+            .await
+            .map_err(|error| VersionError::InvalidResponse(error.to_string()))?;
+
+        Ok(Version::new(response.version))
     }
 }
 

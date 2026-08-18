@@ -3,14 +3,13 @@ use cenyslovensko_rpc_server::domain::{RpcRequest, RpcResponse, VERSION_GET_METH
 use cenyslovensko_rpc_server::ports::{RpcRequestHandler, VersionGateway};
 use criterion::{Criterion, criterion_group, criterion_main};
 use serde_json::{Value, json};
-use std::future::Future;
 use std::hint::black_box;
 
 struct FakeVersionGateway;
 
 impl VersionGateway for FakeVersionGateway {
-    fn get_version(&self) -> impl Future<Output = Result<String, String>> {
-        async { Ok("0.1.370".into()) }
+    async fn get_version(&self) -> Result<String, String> {
+        Ok("0.1.370".into())
     }
 }
 

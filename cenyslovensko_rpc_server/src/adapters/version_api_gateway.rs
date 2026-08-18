@@ -17,13 +17,11 @@ impl VersionApiGateway {
 }
 
 impl VersionGateway for VersionApiGateway {
-    fn get_version(&self) -> impl Future<Output = Result<String, String>> {
-        async move {
-            self.use_case
-                .execute()
-                .await
-                .map(|version| version.to_string())
-                .map_err(|error| error.to_string())
-        }
+    async fn get_version(&self) -> Result<String, String> {
+        self.use_case
+            .execute()
+            .await
+            .map(|version| version.to_string())
+            .map_err(|error| error.to_string())
     }
 }

@@ -4,19 +4,16 @@ use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
 use std::time::Duration;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default)]
 pub enum LogLevel {
     Error,
     Warn,
+    #[default]
     Info,
     Debug,
     Trace,
 }
 
-impl Default for LogLevel {
-    fn default() -> Self {
-        Self::Info
-    }
-}
 
 #[derive(Display, Error, Diagnostic, Debug, Clone, PartialEq, Eq)]
 #[diagnostic(url("https://docs.rs/cenyslovensko_web_client"))]

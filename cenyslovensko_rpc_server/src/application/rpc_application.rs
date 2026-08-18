@@ -22,18 +22,13 @@ impl<TVersionGateway> RpcRequestHandler for RpcApplication<TVersionGateway>
 where
     TVersionGateway: VersionGateway,
 {
-    fn handle_request(
-        &self,
-        request: RpcRequest,
-    ) -> impl std::future::Future<Output = RpcResponse> {
-        async move {
-            match request.method.as_str() {
-                VERSION_GET_METHOD => match self.version_gateway.get_version().await {
-                    Ok(version) => RpcResponse::success(request.id, json!({ "version": version })),
-                    Err(error) => RpcResponse::internal_error(request.id, error),
-                },
-                _ => RpcResponse::method_not_found(request.id),
-            }
+    async fn handle_request(&self, request: RpcRequest) -> RpcResponse {
+        match request.method.as_str() {
+            VERSION_GET_METHOD => match self.version_gateway.get_version().await {
+                Ok(version) => RpcResponse::success(request.id, json!({ "version": version })),
+                Err(error) => RpcResponse::internal_error(request.id, error),
+            },
+            _ => RpcResponse::method_not_found(request.id),
         }
     }
 }
@@ -50,9 +45,8 @@ mod tests {
     }
 
     impl VersionGateway for FakeVersionGateway {
-        fn get_version(&self) -> impl std::future::Future<Output = Result<String, String>> {
-            let result = self.result.clone();
-            async move { result }
+        async fn get_version(&self) -> Result<String, String> {
+            self.result.clone()
         }
     }
 
