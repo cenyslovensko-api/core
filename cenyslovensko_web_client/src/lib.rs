@@ -3,8 +3,7 @@ use miette::Diagnostic;
 use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
 use std::time::Duration;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum LogLevel {
     Error,
     Warn,
@@ -13,7 +12,6 @@ pub enum LogLevel {
     Debug,
     Trace,
 }
-
 
 #[derive(Display, Error, Diagnostic, Debug, Clone, PartialEq, Eq)]
 #[diagnostic(url("https://docs.rs/cenyslovensko_web_client"))]
