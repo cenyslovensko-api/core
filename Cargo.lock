@@ -137,8 +137,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "cenyslovensko"
-version = "0.1.0"
+name = "cenyslovensko_api"
+version = "0.1.1"
 dependencies = [
  "cenyslovensko_version_api",
  "cenyslovensko_web_client",
@@ -146,10 +146,10 @@ dependencies = [
 
 [[package]]
 name = "cenyslovensko_rpc_server"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "anyhow",
- "cenyslovensko",
+ "cenyslovensko_api",
  "serde",
  "serde_json",
  "tokio",
@@ -157,7 +157,7 @@ dependencies = [
 
 [[package]]
 name = "cenyslovensko_version_api"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "anyhow",
  "cenyslovensko_web_client",
@@ -171,7 +171,7 @@ dependencies = [
 
 [[package]]
 name = "cenyslovensko_web_client"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "reqwest",
 ]

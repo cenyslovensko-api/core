@@ -1,6 +1,6 @@
-use cenyslovensko::version::adapters::http::HttpVersionSource;
-use cenyslovensko::version::application::GetVersionUseCase;
-use cenyslovensko::web_client::WebClient;
+use cenyslovensko_api::version::adapters::http::HttpVersionSource;
+use cenyslovensko_api::version::application::GetVersionUseCase;
+use cenyslovensko_api::web_client::WebClient;
 
 use crate::ports::VersionGateway;
 
@@ -17,7 +17,7 @@ impl VersionApiGateway {
 }
 
 impl VersionGateway for VersionApiGateway {
-    fn get_version(&self) -> impl std::future::Future<Output = Result<String, String>> {
+    fn get_version(&self) -> impl Future<Output = Result<String, String>> {
         async move {
             self.use_case
                 .execute()
