@@ -30,14 +30,18 @@ jobs:
           key: ${{ runner.os }}-cargo-bench-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-bench-
 
-      - name: Run full benchmark suite
-        id: run
+      - name: Run benchmarks
         # language=bash
         run: |
           cargo bench -p cenyslovensko_rpc_server
           cargo bench -p cenyslovensko_version_api
           cargo bench -p cenyslovensko_api --features web_client
 
+
+      - name: Transform benchmarks to JSON
+        id: run
+        # language=bash
+        run: |
           BENCHMARKS_JSON=$(
             find target/criterion -path "*/new/estimates.json" | sort | \
             while IFS= read -r f; do
@@ -48,7 +52,7 @@ jobs:
             done | jq -s '.'
           )
 
-          jq -n \
+          jq -cn \
             --arg client "rust" \
             --arg repository "cenyslovensko-api/core" \
             --arg commit "$(git rev-parse --short HEAD)" \
