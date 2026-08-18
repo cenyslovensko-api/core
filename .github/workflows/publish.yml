@@ -10,12 +10,12 @@ env:
 
 jobs:
   publish:
-    name: Publish cenyslovensko_api
+    name: Publish cenyslovensko
     runs-on: ubuntu-latest
     environment: crates-io
     permissions:
-      id-token: write      # required for SLSA provenance signing via --provenance
-      attestations: write  # required to write provenance attestations
+      id-token: write      # required for OIDC trusted publishing
+      attestations: write  # required to write GitHub attestations
 
     steps:
       - uses: actions/checkout@v4
@@ -31,5 +31,5 @@ jobs:
       - name: Publish
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
-        run: cargo publish -p cenyslovensko_api --no-verify --provenance
+        run: cargo publish -p cenyslovensko --no-verify
 
