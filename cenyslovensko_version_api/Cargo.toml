@@ -12,7 +12,7 @@ reqwest = { workspace = true, features = ["json"] }
 serde = { workspace = true, features = ["derive"] }
 derive_more = { workspace = true, features = ["display", "eq", "constructor", "error"] }
 miette = { workspace = true }
-cenyslovensko_web_client = { path = "../cenyslovensko_web_client" }
+cenyslovensko_web_client = { path = "../cenyslovensko_web_client", version = "0.1.5" }
 
 [dev-dependencies]
 httpmock = { workspace = true }

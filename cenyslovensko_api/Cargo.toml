@@ -15,9 +15,9 @@ version = ["web_client", "dep:cenyslovensko_version_api"]
 vendor = ["web_client", "dep:cenyslovensko_vendor_api"]
 
 [dependencies]
-cenyslovensko_web_client = { path = "../cenyslovensko_web_client", optional = true }
-cenyslovensko_version_api = { path = "../cenyslovensko_version_api", optional = true }
-cenyslovensko_vendor_api = { path = "../cenyslovensko_vendor_api", optional = true }
+cenyslovensko_web_client = { path = "../cenyslovensko_web_client", optional = true, version = "0.1.5" }
+cenyslovensko_version_api = { path = "../cenyslovensko_version_api", optional = true, version = "0.1.5" }
+cenyslovensko_vendor_api = { path = "../cenyslovensko_vendor_api", optional = true, version = "0.1.5" }
 
 [dev-dependencies]
 criterion = { workspace = true }
