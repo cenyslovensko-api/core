@@ -171,7 +171,7 @@ dependencies = [
 
 [[package]]
 name = "cenyslovensko_api"
-version = "0.1.11"
+version = "0.1.14"
 dependencies = [
  "cenyslovensko_product_api",
  "cenyslovensko_vendor_api",
@@ -182,7 +182,7 @@ dependencies = [
 
 [[package]]
 name = "cenyslovensko_product_api"
-version = "0.1.0"
+version = "0.1.14"
 dependencies = [
  "cenyslovensko_web_client",
  "criterion",
@@ -196,7 +196,7 @@ dependencies = [
 
 [[package]]
 name = "cenyslovensko_rpc_server"
-version = "0.1.11"
+version = "0.1.14"
 dependencies = [
  "anyhow",
  "cenyslovensko_api",
@@ -208,7 +208,7 @@ dependencies = [
 
 [[package]]
 name = "cenyslovensko_vendor_api"
-version = "0.1.11"
+version = "0.1.14"
 dependencies = [
  "cenyslovensko_web_client",
  "criterion",
@@ -222,7 +222,7 @@ dependencies = [
 
 [[package]]
 name = "cenyslovensko_version_api"
-version = "0.1.11"
+version = "0.1.14"
 dependencies = [
  "cenyslovensko_web_client",
  "criterion",
@@ -236,7 +236,7 @@ dependencies = [
 
 [[package]]
 name = "cenyslovensko_web_client"
-version = "0.1.11"
+version = "0.1.14"
 dependencies = [
  "derive_more",
  "miette",

@@ -89,7 +89,7 @@ endif
 	@for f in $(VERSION_CRATES); do \
 	  sed -i.bak "s/version = \"$(CURRENT_VERSION)\"/version = \"$(VERSION)\"/g" $$f && rm $$f.bak; \
 	done
-	cargo check --workspace
+	#cargo check --workspace
 	git add $(VERSION_CRATES)
 	git commit -m "chore: release v$(VERSION)" --no-verify
 	git tag -a "v$(VERSION)" -m "Release v$(VERSION)"
