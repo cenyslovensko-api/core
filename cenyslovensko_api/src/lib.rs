@@ -1,3 +1,35 @@
+//! Umbrella crate for the CenySlovensko Rust API.
+//!
+//! Enable only the feature-gated modules you need:
+//! - `web_client` for shared HTTP client configuration
+//! - `version` for the version API client
+//! - `vendor` for the vendor API client
+//! - `full` for all of the above
+//!
+//! # Examples
+//!
+//! ```no_run
+//! # #[cfg(feature = "full")]
+//! # async fn example() -> Result<(), Box<dyn std::error::Error>> {
+//! use cenyslovensko_api::{
+//!     version::{adapters::http::HttpVersionSource, application::GetVersionUseCase},
+//!     vendor::{adapters::http::HttpVendorSource, application::get_vendors_use_case::GetVendorsUseCase},
+//!     web_client::WebClientConfig,
+//! };
+//!
+//! let web_client = WebClientConfig::new("https://api.cenyslovensko.sk/").build()?;
+//! let version_use_case = GetVersionUseCase::new(HttpVersionSource::new(web_client.clone(), "version"));
+//! let vendor_use_case = GetVendorsUseCase::new(HttpVendorSource::new(web_client, "vendor".to_string()));
+//!
+//! let version = version_use_case.execute().await?;
+//! let vendors = vendor_use_case.execute().await?;
+//!
+//! assert!(!version.to_string().is_empty());
+//! println!("Found {} vendors", vendors.len());
+//! # Ok(())
+//! # }
+//! ```
+//!
 /// Configurable HTTP web client (base URI, headers, timeouts, proxy, log level).
 ///
 /// Enabled by feature `web_client`.
