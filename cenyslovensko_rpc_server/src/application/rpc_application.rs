@@ -2,13 +2,72 @@ use crate::domain::{RpcRequest, RpcResponse, VENDOR_GET_METHOD, VERSION_GET_METH
 use crate::ports::{RpcRequestHandler, VendorGateway, VersionGateway};
 use serde_json::json;
 
-pub struct RpcApplication<TVersionGateway, TVendorGateway>
+#[doc(hidden)]
+pub struct MissingVersionGateway;
+#[doc(hidden)]
+pub struct MissingVendorGateway;
+
+pub struct RpcApplication<TVersionGateway, TVendorGateway> {
+    version_gateway: TVersionGateway,
+    vendor_gateway: TVendorGateway,
+}
+
+pub struct RpcApplicationBuilder<
+    TVersionGateway = MissingVersionGateway,
+    TVendorGateway = MissingVendorGateway,
+> {
+    version_gateway: TVersionGateway,
+    vendor_gateway: TVendorGateway,
+}
+
+impl RpcApplicationBuilder {
+    pub fn new() -> Self {
+        Self {
+            version_gateway: MissingVersionGateway,
+            vendor_gateway: MissingVendorGateway,
+        }
+    }
+}
+
+impl Default for RpcApplicationBuilder {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<TVersionGateway, TVendorGateway> RpcApplicationBuilder<TVersionGateway, TVendorGateway> {
+    pub fn version_gateway<TNewVersionGateway: VersionGateway>(
+        self,
+        version_gateway: TNewVersionGateway,
+    ) -> RpcApplicationBuilder<TNewVersionGateway, TVendorGateway> {
+        RpcApplicationBuilder {
+            version_gateway,
+            vendor_gateway: self.vendor_gateway,
+        }
+    }
+
+    pub fn vendor_gateway<TNewVendorGateway: VendorGateway>(
+        self,
+        vendor_gateway: TNewVendorGateway,
+    ) -> RpcApplicationBuilder<TVersionGateway, TNewVendorGateway> {
+        RpcApplicationBuilder {
+            version_gateway: self.version_gateway,
+            vendor_gateway,
+        }
+    }
+}
+
+impl<TVersionGateway, TVendorGateway> RpcApplicationBuilder<TVersionGateway, TVendorGateway>
 where
     TVersionGateway: VersionGateway,
     TVendorGateway: VendorGateway,
 {
-    version_gateway: TVersionGateway,
-    vendor_gateway: TVendorGateway,
+    pub fn build(self) -> RpcApplication<TVersionGateway, TVendorGateway> {
+        RpcApplication {
+            version_gateway: self.version_gateway,
+            vendor_gateway: self.vendor_gateway,
+        }
+    }
 }
 
 impl<TVersionGateway, TVendorGateway> RpcApplication<TVersionGateway, TVendorGateway>
@@ -17,10 +76,10 @@ where
     TVendorGateway: VendorGateway,
 {
     pub fn new(version_gateway: TVersionGateway, vendor_gateway: TVendorGateway) -> Self {
-        Self {
-            version_gateway,
-            vendor_gateway,
-        }
+        RpcApplicationBuilder::new()
+            .version_gateway(version_gateway)
+            .vendor_gateway(vendor_gateway)
+            .build()
     }
 }
 
@@ -77,12 +136,12 @@ mod tests {
 
     #[tokio::test]
     async fn returns_version_for_version_get_method() {
-        let app = RpcApplication::new(
-            FakeVersionGateway {
+        let app = RpcApplicationBuilder::new()
+            .version_gateway(FakeVersionGateway {
                 result: Ok("0.1.370".into()),
-            },
-            FakeVendorGateway { result: Ok(vec![]) },
-        );
+            })
+            .vendor_gateway(FakeVendorGateway { result: Ok(vec![]) })
+            .build();
         let request = RpcRequest {
             id: Value::from(1),
             method: VERSION_GET_METHOD.into(),
@@ -97,11 +156,11 @@ mod tests {
 
     #[tokio::test]
     async fn returns_vendors_for_vendor_get_method() {
-        let app = RpcApplication::new(
-            FakeVersionGateway {
+        let app = RpcApplicationBuilder::new()
+            .version_gateway(FakeVersionGateway {
                 result: Ok("0.1.370".into()),
-            },
-            FakeVendorGateway {
+            })
+            .vendor_gateway(FakeVendorGateway {
                 result: Ok(vec![Vendor::new(
                     "branch_1".into(),
                     "Main Branch".into(),
@@ -109,8 +168,8 @@ mod tests {
                     "company_1".into(),
                     VendorLocation::new(48.8566, 2.3522),
                 )]),
-            },
-        );
+            })
+            .build();
         let request = RpcRequest {
             id: Value::from(1),
             method: VENDOR_GET_METHOD.into(),
@@ -142,14 +201,14 @@ mod tests {
 
     #[tokio::test]
     async fn returns_internal_error_for_vendor_failure() {
-        let app = RpcApplication::new(
-            FakeVersionGateway {
+        let app = RpcApplicationBuilder::new()
+            .version_gateway(FakeVersionGateway {
                 result: Ok("0.1.370".into()),
-            },
-            FakeVendorGateway {
+            })
+            .vendor_gateway(FakeVendorGateway {
                 result: Err(VendorError::Unavailable("vendor unavailable".into())),
-            },
-        );
+            })
+            .build();
         let request = RpcRequest {
             id: Value::from(1),
             method: VENDOR_GET_METHOD.into(),
@@ -167,12 +226,12 @@ mod tests {
 
     #[tokio::test]
     async fn returns_method_not_found_for_unknown_method() {
-        let app = RpcApplication::new(
-            FakeVersionGateway {
+        let app = RpcApplicationBuilder::new()
+            .version_gateway(FakeVersionGateway {
                 result: Ok("0.1.370".into()),
-            },
-            FakeVendorGateway { result: Ok(vec![]) },
-        );
+            })
+            .vendor_gateway(FakeVendorGateway { result: Ok(vec![]) })
+            .build();
         let request = RpcRequest {
             id: Value::from(1),
             method: "unknown.method".into(),
@@ -186,5 +245,24 @@ mod tests {
             response.error.expect("error should be present").code,
             -32601
         );
+    }
+
+    #[tokio::test]
+    async fn builder_constructs_application() {
+        let app = RpcApplicationBuilder::new()
+            .vendor_gateway(FakeVendorGateway { result: Ok(vec![]) })
+            .version_gateway(FakeVersionGateway {
+                result: Ok("0.1.370".into()),
+            })
+            .build();
+        let request = RpcRequest {
+            id: Value::from(1),
+            method: VERSION_GET_METHOD.into(),
+            params: None,
+        };
+
+        let response = app.handle_request(request).await;
+
+        assert_eq!(response.result, Some(json!({ "version": "0.1.370" })));
     }
 }

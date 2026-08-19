@@ -1,3 +1,3 @@
 mod rpc_application;
 
-pub use rpc_application::RpcApplication;
+pub use rpc_application::{RpcApplication, RpcApplicationBuilder};
