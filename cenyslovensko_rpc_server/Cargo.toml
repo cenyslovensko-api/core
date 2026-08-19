@@ -1,6 +1,6 @@
 [package]
 name = "cenyslovensko_rpc_server"
-version = "0.1.6"
+version = "0.1.7"
 edition = "2024"
 
 [dependencies]
@@ -8,7 +8,7 @@ tokio = { workspace = true, features = ["macros", "rt-multi-thread", "io-std", "
 serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true }
 anyhow = { workspace = true }
-cenyslovensko_api = { path = "../cenyslovensko_api", features = ["full"], version = "0.1.6" }
+cenyslovensko_api = { path = "../cenyslovensko_api", features = ["full"], version = "0.1.7" }
 
 [dev-dependencies]
 criterion = { workspace = true }
