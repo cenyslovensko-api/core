@@ -1,9 +1,0 @@
-const RPC_SERVER_BIN_ENV = "CENYSLOVENSKO_RPC_SERVER_BIN";
-const RPC_SERVER_BIN_NAME = "cenyslovensko_rpc_server";
-const JSONRPC_VERSION = "2.0";
-
-module.exports = {
-  RPC_SERVER_BIN_ENV,
-  RPC_SERVER_BIN_NAME,
-  JSONRPC_VERSION,
-};
