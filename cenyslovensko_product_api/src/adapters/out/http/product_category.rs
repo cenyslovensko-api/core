@@ -74,11 +74,7 @@ impl From<ProductSubcategoryResponse> for ProductSubcategory {
         ProductSubcategory {
             id: response.id,
             subcategory_name: response.subcategory_name,
-            types: response
-                .types
-                .into_iter()
-                .map(ProductType::from)
-                .collect(),
+            types: response.types.into_iter().map(ProductType::from).collect(),
         }
     }
 }
@@ -136,9 +132,11 @@ mod tests {
         let server = MockServer::start();
         let _mock = server.mock(|when, then| {
             when.method(GET).path("/product-category");
-            then.status(200).header("content-type", "application/json").body(
-                // language=json
-                r#"[
+            then.status(200)
+                .header("content-type", "application/json")
+                .body(
+                    // language=json
+                    r#"[
                     {
                         "id":"cat_1",
                         "categoryName":"Food",
@@ -153,7 +151,7 @@ mod tests {
                         ]
                     }
                 ]"#,
-            );
+                );
         });
 
         let web_client = WebClientConfig::new(server.base_url())
@@ -219,7 +217,10 @@ mod tests {
 
         let result = source.get_product_categories().await;
 
-        assert!(matches!(result, Err(ProductCategoryError::InvalidResponse(_))));
+        assert!(matches!(
+            result,
+            Err(ProductCategoryError::InvalidResponse(_))
+        ));
     }
 
     #[tokio::test]

@@ -24,8 +24,9 @@ impl RpcServerConfig {
             env::var("CENYSLOVENSKO_VERSION_PATH").unwrap_or_else(|_| DEFAULT_VERSION_PATH.into());
         let vendor_path =
             env::var("CENYSLOVENSKO_VENDOR_PATH").unwrap_or_else(|_| DEFAULT_VENDOR_PATH.into());
-        let product_prices_current_day_path = env::var("CENYSLOVENSKO_PRODUCT_PRICES_CURRENT_DAY_PATH")
-            .unwrap_or_else(|_| DEFAULT_PRODUCT_PRICES_CURRENT_DAY_PATH.into());
+        let product_prices_current_day_path =
+            env::var("CENYSLOVENSKO_PRODUCT_PRICES_CURRENT_DAY_PATH")
+                .unwrap_or_else(|_| DEFAULT_PRODUCT_PRICES_CURRENT_DAY_PATH.into());
         Ok(Self {
             web_client,
             version_path,

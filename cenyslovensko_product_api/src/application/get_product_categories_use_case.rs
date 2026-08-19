@@ -14,7 +14,9 @@ where
     TProductCategorySource: ProductCategorySource,
 {
     pub fn new(product_category_source: TProductCategorySource) -> Self {
-        Self { product_category_source }
+        Self {
+            product_category_source,
+        }
     }
 
     pub async fn execute(&self) -> Result<Vec<ProductCategory>, ProductCategoryError> {
@@ -33,7 +35,9 @@ mod tests {
     }
 
     impl ProductCategorySource for FakeProductCategorySource {
-        async fn get_product_categories(&self) -> Result<Vec<ProductCategory>, ProductCategoryError> {
+        async fn get_product_categories(
+            &self,
+        ) -> Result<Vec<ProductCategory>, ProductCategoryError> {
             self.result
                 .lock()
                 .expect("fake source mutex should not be poisoned")

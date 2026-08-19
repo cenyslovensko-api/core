@@ -179,11 +179,13 @@ fn benchmark_http_product_price_source(c: &mut Criterion) {
         .build();
     let rt = Runtime::new().unwrap();
 
-    c.bench_function("http_product_price_source_get_current_day_product_prices", |b| {
-        b.to_async(&rt).iter(|| {
-            source.get_current_day_product_prices(black_box(query.clone()))
-        })
-    });
+    c.bench_function(
+        "http_product_price_source_get_current_day_product_prices",
+        |b| {
+            b.to_async(&rt)
+                .iter(|| source.get_current_day_product_prices(black_box(query.clone())))
+        },
+    );
 }
 
 criterion_group!(

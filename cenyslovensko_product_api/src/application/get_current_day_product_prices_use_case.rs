@@ -105,7 +105,11 @@ mod tests {
         });
 
         let result = use_case
-            .execute(ProductPricesCurrentDayQuery::builder().add_branch_id("8102_50020188").build())
+            .execute(
+                ProductPricesCurrentDayQuery::builder()
+                    .add_branch_id("8102_50020188")
+                    .build(),
+            )
             .await;
 
         let response = result.expect("expected product prices from source");
@@ -121,7 +125,11 @@ mod tests {
         });
 
         let result = use_case
-            .execute(ProductPricesCurrentDayQuery::builder().add_branch_id("8102_50020188").build())
+            .execute(
+                ProductPricesCurrentDayQuery::builder()
+                    .add_branch_id("8102_50020188")
+                    .build(),
+            )
             .await;
 
         assert!(matches!(result, Err(ProductPriceError::NotFound)));

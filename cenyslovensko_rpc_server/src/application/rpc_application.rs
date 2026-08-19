@@ -3,9 +3,7 @@ use crate::domain::{
     VERSION_GET_METHOD,
 };
 use crate::ports::{ProductPricesGateway, RpcRequestHandler, VendorGateway, VersionGateway};
-use cenyslovensko_api::product::domain::product_price::{
-    ProductPricesCurrentDayQuery, SortOrder,
-};
+use cenyslovensko_api::product::domain::product_price::{ProductPricesCurrentDayQuery, SortOrder};
 use serde::Deserialize;
 use serde_json::json;
 
@@ -168,16 +166,18 @@ where
                         );
                     }
                 };
-                let params: ProductPricesCurrentDayParams = match serde_json::from_value(params_value)
-                {
-                    Ok(params) => params,
-                    Err(error) => {
-                        return RpcResponse::invalid_params(
-                            request.id,
-                            format!("Invalid params for product-prices.current-day.get: {error}"),
-                        );
-                    }
-                };
+                let params: ProductPricesCurrentDayParams =
+                    match serde_json::from_value(params_value) {
+                        Ok(params) => params,
+                        Err(error) => {
+                            return RpcResponse::invalid_params(
+                                request.id,
+                                format!(
+                                    "Invalid params for product-prices.current-day.get: {error}"
+                                ),
+                            );
+                        }
+                    };
                 if params.branch_ids.is_empty() {
                     return RpcResponse::invalid_params(
                         request.id,
@@ -185,7 +185,8 @@ where
                     );
                 }
 
-                let mut query_builder = ProductPricesCurrentDayQuery::builder().branch_ids(params.branch_ids);
+                let mut query_builder =
+                    ProductPricesCurrentDayQuery::builder().branch_ids(params.branch_ids);
                 if let Some(order_by) = params.order_by {
                     query_builder = query_builder.order_by(order_by);
                 }
@@ -216,9 +217,10 @@ where
                     .get_current_day_product_prices(query_builder.build())
                     .await
                 {
-                    Ok(product_prices) => {
-                        RpcResponse::success(request.id, json!({ "product_prices": product_prices }))
-                    }
+                    Ok(product_prices) => RpcResponse::success(
+                        request.id,
+                        json!({ "product_prices": product_prices }),
+                    ),
                     Err(error) => RpcResponse::internal_error(request.id, error.to_string()),
                 }
             }
@@ -423,7 +425,10 @@ mod tests {
         let response = app.handle_request(request).await;
 
         assert_eq!(response.error, None);
-        assert_eq!(response.result, Some(json!({ "product_prices": sample_product_prices_response() })));
+        assert_eq!(
+            response.result,
+            Some(json!({ "product_prices": sample_product_prices_response() }))
+        );
     }
 
     #[tokio::test]
