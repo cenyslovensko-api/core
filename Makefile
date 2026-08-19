@@ -1,6 +1,7 @@
 .DEFAULT_GOAL := help
 
 VERSION_CRATES := cenyslovensko_api/Cargo.toml \
+                  cenyslovensko_vendor_api/Cargo.toml \
                   cenyslovensko_version_api/Cargo.toml \
                   cenyslovensko_web_client/Cargo.toml \
                   cenyslovensko_rpc_server/Cargo.toml
