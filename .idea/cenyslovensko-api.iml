@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="EMPTY_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/cenyslovensko_version_api/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cenyslovensko_api/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cenyslovensko_rpc_server/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cenyslovensko_web_client/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cenyslovensko_api/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/cenyslovensko_rpc_server/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/cenyslovensko_version_api/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/cenyslovensko_vendor_api/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/cenyslovensko_vendor_api/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cenyslovensko_product_api/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/cenyslovensko_product_api/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
