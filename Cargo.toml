@@ -11,7 +11,7 @@ members = [
 
 [workspace.package]
 license = "MIT"
-repository = "https://github.com/karafra/cenyslovensko-api"
+repository = "https://github.com/cenyslovensko-api/core"
 
 [workspace.dependencies]
 reqwest = "0.13.4"
