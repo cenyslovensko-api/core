@@ -3,6 +3,7 @@ use serde_json::Value;
 
 pub const VERSION_GET_METHOD: &str = "version.get";
 pub const VENDOR_GET_METHOD: &str = "vendor.get";
+pub const PRODUCT_PRICES_CURRENT_DAY_GET_METHOD: &str = "product-prices.current-day.get";
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 pub struct RpcRequest {
@@ -56,6 +57,10 @@ impl RpcResponse {
 
     pub fn method_not_found(id: Value) -> Self {
         Self::error(id, -32601, "Method not found")
+    }
+
+    pub fn invalid_params(id: Value, message: impl Into<String>) -> Self {
+        Self::error(id, -32602, message)
     }
 
     pub fn internal_error(id: Value, message: impl Into<String>) -> Self {

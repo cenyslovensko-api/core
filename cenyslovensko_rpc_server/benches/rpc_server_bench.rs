@@ -1,3 +1,6 @@
+use cenyslovensko_api::product::domain::product_price::CurrentDayProductPricesPage;
+use cenyslovensko_api::product::domain::product_price::ProductPricesCurrentDayQuery;
+use cenyslovensko_api::product::domain::product_price_error::ProductPriceError;
 use cenyslovensko_api::vendor::domain::vendor::Vendor;
 use cenyslovensko_api::vendor::domain::vendor_error::VendorError;
 use cenyslovensko_rpc_server::adapters::stdio_rpc_server;
@@ -5,7 +8,9 @@ use cenyslovensko_rpc_server::application::RpcApplicationBuilder;
 use cenyslovensko_rpc_server::domain::{
     RpcRequest, RpcResponse, VENDOR_GET_METHOD, VERSION_GET_METHOD,
 };
-use cenyslovensko_rpc_server::ports::{RpcRequestHandler, VendorGateway, VersionGateway};
+use cenyslovensko_rpc_server::ports::{
+    ProductPricesGateway, RpcRequestHandler, VendorGateway, VersionGateway,
+};
 use criterion::{Criterion, criterion_group, criterion_main};
 use serde_json::{Value, json};
 use std::hint::black_box;
@@ -27,10 +32,27 @@ impl VendorGateway for FakeVendorGateway {
     }
 }
 
+struct FakeProductPricesGateway;
+
+impl ProductPricesGateway for FakeProductPricesGateway {
+    async fn get_current_day_product_prices(
+        &self,
+        _query: ProductPricesCurrentDayQuery,
+    ) -> Result<CurrentDayProductPricesPage, ProductPriceError> {
+        Ok(CurrentDayProductPricesPage {
+            page: 0,
+            size: 0,
+            count: 0,
+            content: vec![],
+        })
+    }
+}
+
 fn build_app() -> impl RpcRequestHandler {
     RpcApplicationBuilder::new()
         .version_gateway(FakeVersionGateway)
         .vendor_gateway(FakeVendorGateway)
+        .product_prices_gateway(FakeProductPricesGateway)
         .build()
 }
 
@@ -39,6 +61,7 @@ fn bench_handle_version_get(c: &mut Criterion) {
     let app = RpcApplicationBuilder::new()
         .version_gateway(FakeVersionGateway)
         .vendor_gateway(FakeVendorGateway)
+        .product_prices_gateway(FakeProductPricesGateway)
         .build();
     let request = RpcRequest {
         id: Value::from(1),
@@ -57,6 +80,7 @@ fn bench_handle_unknown_method(c: &mut Criterion) {
     let app = RpcApplicationBuilder::new()
         .version_gateway(FakeVersionGateway)
         .vendor_gateway(FakeVendorGateway)
+        .product_prices_gateway(FakeProductPricesGateway)
         .build();
     let request = RpcRequest {
         id: Value::from(1),
@@ -75,6 +99,7 @@ fn bench_handle_vendor_get(c: &mut Criterion) {
     let app = RpcApplicationBuilder::new()
         .version_gateway(FakeVersionGateway)
         .vendor_gateway(FakeVendorGateway)
+        .product_prices_gateway(FakeProductPricesGateway)
         .build();
     let request = RpcRequest {
         id: Value::from(1),

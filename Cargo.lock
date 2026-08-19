@@ -173,10 +173,25 @@ dependencies = [
 name = "cenyslovensko_api"
 version = "0.1.8"
 dependencies = [
+ "cenyslovensko_product_api",
  "cenyslovensko_vendor_api",
  "cenyslovensko_version_api",
  "cenyslovensko_web_client",
  "criterion",
+]
+
+[[package]]
+name = "cenyslovensko_product_api"
+version = "0.1.0"
+dependencies = [
+ "cenyslovensko_web_client",
+ "criterion",
+ "derive_more",
+ "httpmock",
+ "miette",
+ "reqwest",
+ "serde",
+ "tokio",
 ]
 
 [[package]]

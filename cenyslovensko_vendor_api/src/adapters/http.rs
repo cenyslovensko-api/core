@@ -94,6 +94,7 @@ mod tests {
             then.status(200)
                 .header("content-type", "application/json")
                 .body(
+                    // language=json
                     r#"[
                     {
                         "branchId":"branch_1",

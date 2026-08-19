@@ -1,0 +1,24 @@
+[package]
+name = "cenyslovensko_product_api"
+version = "0.1.0"
+edition = "2024"
+license.workspace = true
+repository.workspace = true
+description = "Product API client for CenySlovensko - fetch product information over HTTP."
+
+[dependencies]
+tokio = { workspace = true }
+reqwest = { workspace = true, features = ["json"] }
+serde = { workspace = true, features = ["derive"] }
+derive_more = { workspace = true, features = ["display", "eq", "constructor", "error", "from"] }
+miette = { workspace = true }
+cenyslovensko_web_client = { path = "../cenyslovensko_web_client", version = "0.1.8" }
+
+[dev-dependencies]
+httpmock = { workspace = true }
+tokio = { workspace = true, features = ["rt"] }
+criterion = { workspace = true }
+
+[[bench]]
+name = "product_api_bench"
+harness = false

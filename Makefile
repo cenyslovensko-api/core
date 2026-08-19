@@ -4,7 +4,8 @@ VERSION_CRATES := cenyslovensko_api/Cargo.toml \
                   cenyslovensko_vendor_api/Cargo.toml \
                   cenyslovensko_version_api/Cargo.toml \
                   cenyslovensko_web_client/Cargo.toml \
-                  cenyslovensko_rpc_server/Cargo.toml
+                  cenyslovensko_rpc_server/Cargo.toml \
+                  cenyslovensko_product_api/Cargo.toml
 
 # Read current version from umbrella crate
 CURRENT_VERSION := $(shell grep -m1 '^version' cenyslovensko_api/Cargo.toml | sed 's/version = "\(.*\)"/\1/')

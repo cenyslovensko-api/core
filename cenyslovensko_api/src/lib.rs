@@ -4,6 +4,7 @@
 //! - `web_client` for shared HTTP client configuration
 //! - `version` for the version API client
 //! - `vendor` for the vendor API client
+//! - `product` for product categories and product prices API clients
 //! - `full` for all of the above
 //!
 //! # Examples
@@ -47,3 +48,9 @@ pub use cenyslovensko_version_api as version;
 /// Enabled by feature `vendor` (implies `web_client`).
 #[cfg(feature = "vendor")]
 pub use cenyslovensko_vendor_api as vendor;
+
+/// Product API - fetch product categories and current-day product prices over HTTP.
+///
+/// Enabled by feature `product` (implies `web_client`).
+#[cfg(feature = "product")]
+pub use cenyslovensko_product_api as product;
