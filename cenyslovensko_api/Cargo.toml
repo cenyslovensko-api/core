@@ -1,6 +1,6 @@
 [package]
 name = "cenyslovensko_api"
-version = "0.1.9"
+version = "0.1.10"
 edition = "2024"
 description = "Umbrella crate for the CenySlovensko API - feature-gate individual sub-crates."
 license.workspace = true
@@ -16,9 +16,9 @@ vendor = ["web_client", "dep:cenyslovensko_vendor_api"]
 product = ["web_client", "dep:cenyslovensko_product_api"]
 
 [dependencies]
-cenyslovensko_web_client = { path = "../cenyslovensko_web_client", optional = true, version = "0.1.9" }
-cenyslovensko_version_api = { path = "../cenyslovensko_version_api", optional = true, version = "0.1.9" }
-cenyslovensko_vendor_api = { path = "../cenyslovensko_vendor_api", optional = true, version = "0.1.9" }
+cenyslovensko_web_client = { path = "../cenyslovensko_web_client", optional = true, version = "0.1.10" }
+cenyslovensko_version_api = { path = "../cenyslovensko_version_api", optional = true, version = "0.1.10" }
+cenyslovensko_vendor_api = { path = "../cenyslovensko_vendor_api", optional = true, version = "0.1.10" }
 cenyslovensko_product_api = { path = "../cenyslovensko_product_api", optional = true, version = "0.1.0" }
 
 [dev-dependencies]
