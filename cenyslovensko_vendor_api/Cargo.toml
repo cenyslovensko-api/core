@@ -2,6 +2,7 @@
 name = "cenyslovensko_vendor_api"
 version = "0.1.6"
 edition = "2024"
+description = "Vendor API client for CenySlovensko."
 license.workspace = true
 repository.workspace = true
 
