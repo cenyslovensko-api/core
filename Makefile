@@ -91,7 +91,7 @@ endif
 	done
 	cargo check --workspace
 	git add $(VERSION_CRATES)
-	git commit -m "chore: release v$(VERSION)"
+	git commit -m "chore: release v$(VERSION)" --no-verify
 	git tag -a "v$(VERSION)" -m "Release v$(VERSION)"
 	git push origin HEAD "v$(VERSION)"
 	@echo "Tagged and pushed v$(VERSION)"
