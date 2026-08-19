@@ -1,6 +1,6 @@
 [package]
 name = "cenyslovensko_web_client"
-version = "0.1.14"
+version = "0.1.16"
 edition = "2024"
 description = "Configurable HTTP web client for the CenySlovensko API (base URI, headers, timeouts, proxy, log level)."
 license.workspace = true

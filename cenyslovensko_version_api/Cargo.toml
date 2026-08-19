@@ -1,6 +1,6 @@
 [package]
 name = "cenyslovensko_version_api"
-version = "0.1.14"
+version = "0.1.16"
 edition = "2024"
 description = "Version API client for CenySlovensko - fetch the current API version over HTTP."
 license.workspace = true
@@ -12,7 +12,7 @@ reqwest = { workspace = true, features = ["json"] }
 serde = { workspace = true, features = ["derive"] }
 derive_more = { workspace = true, features = ["display", "eq", "constructor", "error"] }
 miette = { workspace = true }
-cenyslovensko_web_client = { path = "../cenyslovensko_web_client", version = "0.1.14" }
+cenyslovensko_web_client = { path = "../cenyslovensko_web_client", version = "0.1.16" }
 
 [dev-dependencies]
 httpmock = { workspace = true }
